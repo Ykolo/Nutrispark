@@ -2,7 +2,7 @@ import ComboBox from './components/ComboBox'
 
 export default function Home() {
   return (
-    <div>
+    <div className="h-screen">
       <ComboBox />
     </div>
   )

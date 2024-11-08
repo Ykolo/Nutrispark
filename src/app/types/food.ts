@@ -19,11 +19,11 @@ const FoodReducedSchema = z.object({
 })
 export type FoodReducedType = z.infer<typeof FoodReducedSchema>
 
-const MacronutrientDataSchema = z.object({
+const MacronutrimentDataSchema = z.object({
   name: z.enum(['carbohydrates', 'protein', 'fat']),
   value: z.number().nonnegative(),
 })
-export type MacronutrientDataType = z.infer<typeof MacronutrientDataSchema>
+export type MacronutrimentDataType = z.infer<typeof MacronutrimentDataSchema>
 
 // export interface IFood {
 //   name: string
