@@ -1,5 +1,6 @@
+import { NextResponse } from 'next/server'
 import { foods } from '../../../data/data'
 
 export const GET = async () => {
-  return Response.json(foods)
+  return NextResponse.json(foods)
 }
