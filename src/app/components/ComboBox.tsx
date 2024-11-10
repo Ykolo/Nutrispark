@@ -1,4 +1,5 @@
 'use client'
+import { Search } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { cn } from '../libs/utils'
@@ -51,9 +52,9 @@ const ComboBox = () => {
       document.removeEventListener('click', handleClickOutside)
     }
   }, [])
-  useEffect(() => {
-    value.length > 0 ? router.push(`../food/${value}`) : null
-  }, [value])
+  // useEffect(() => {
+  //   value.length > 0 ? router.push(`../food/${value}`) : null
+  // }, [value])
   return (
     <div
       className={cn(
@@ -71,20 +72,33 @@ const ComboBox = () => {
             search below to get started
           </p>
           <div ref={BoxRef} className="w-60">
-            <input
-              type="text"
-              value={value}
-              onChange={(e) => setValue(e.target.value)}
-              onFocus={() => setIsOpen(true)}
-              className={cn('w-full rounded-md border border-slate-950 p-4')}
-              placeholder="Search for food..."
-            />
-            {/* <button
-              onClick={toggleDropDown}
-              className="rounded-lg bg-white p-4"
+            <form
+              className="flex"
+              onSubmit={(e) => {
+                e.preventDefault()
+                router.push(`../food/${value}`)
+              }}
             >
-              <ChevronsUpDown />
-            </button> */}
+              <input
+                type="text"
+                value={value}
+                onChange={(e) => setValue(e.target.value)}
+                onFocus={() => setIsOpen(true)}
+                className={cn(
+                  'w-full rounded-md border border-slate-700 bg-slate-950 p-4 text-slate-50'
+                )}
+                placeholder="Search for food..."
+              />
+              <button
+                type="submit"
+                onClick={() => {
+                  router.push(`../food/${value}`)
+                }}
+                className="ml-2 rounded-lg border border-slate-700 bg-slate-950 p-4 text-slate-50 focus:border-slate-50"
+              >
+                <Search />
+              </button>
+            </form>
             {isOpen && !isLoading && (
               <ul className="mt-2 max-h-40 w-full overflow-y-auto rounded-md border border-slate-300 bg-slate-950 text-white">
                 {foods.length > 0 ? (
