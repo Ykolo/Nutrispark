@@ -10,6 +10,7 @@ export const GET = async (
   const index = foods.findIndex(
     (food) => food.name.toLowerCase().replace(/ /g, '-') === foodName
   )
+
   return index !== -1
     ? new NextResponse(JSON.stringify(foods[index]), {
         headers: {
