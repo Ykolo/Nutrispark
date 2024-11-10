@@ -111,6 +111,7 @@ const ComboBox = () => {
                         key={index}
                         onClick={() => {
                           setValue(food.label), setIsOpen(false)
+                          router.push(`../food/${food.value}`)
                         }}
                         className="cursor-pointer p-2 text-xl hover:bg-slate-700"
                       >
