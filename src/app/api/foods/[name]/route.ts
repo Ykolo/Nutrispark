@@ -4,10 +4,9 @@ import { FoodParamsType } from '../../../types/Params'
 
 export const GET = async (
   request: Request,
-  { params }: { params: FoodParamsType | Promise<FoodParamsType> }
+  { params }: { params: FoodParamsType }
 ) => {
-  const awaitedParams = await params // Ensure the params are resolved if it's a Promise
-  const foodName = awaitedParams.name.toLowerCase().replace(/ /g, '-')
+  const foodName = params.name.toLowerCase().replace(/ /g, '-')
   const index = foods.findIndex(
     (food) => food.name.toLowerCase().replace(/ /g, '-') === foodName
   )

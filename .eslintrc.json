@@ -1,6 +1,6 @@
 {
   "extends": ["next/core-web-vitals", "next/typescript"],
-  "plugins": ["prettier"],
+  "plugins": ["prettier-plugin-tailwindcss"],
   "rules": {
     "react/react-in-jsx-scope": "off",
     "prettier/prettier": "error",
