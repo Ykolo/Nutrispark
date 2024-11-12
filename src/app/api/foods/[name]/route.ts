@@ -8,7 +8,9 @@ export const GET = async (
 ) => {
   const { name } = await context.params;
   const index = foods.findIndex(
-    (food) => food.name.toLowerCase().replace(/ /g, "-") === name,
+    (food) =>
+      food.name.toLowerCase().replace(/ /g, "-") ===
+      name.toLowerCase().replace(/ /g, "-"),
   );
 
   return index !== -1

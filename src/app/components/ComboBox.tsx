@@ -113,7 +113,7 @@ const ComboBox = () => {
                         }}
                         className="cursor-pointer p-2 text-xl hover:bg-slate-700"
                       >
-                        {food.label};
+                        {food.label}
                       </li>
                     ))
                 ) : (
