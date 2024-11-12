@@ -2,12 +2,11 @@
   "extends": [
     "next/core-web-vitals",
     "next/typescript",
-    "plugin:prettier/recommended"
+    "plugin:tailwindcss/recommended"
   ],
-  "plugins": ["prettier"],
   "rules": {
     "react/react-in-jsx-scope": "off",
-    "prettier/prettier": "error",
+    "prettier/prettier": "off",
     "tailwindcss/classnames-order": "warn",
     "tailwindcss/no-custom-classname": "off"
   }

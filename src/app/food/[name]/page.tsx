@@ -1,48 +1,54 @@
-'use client'
+"use client";
 
-import { Undo2 } from 'lucide-react'
-import Image from 'next/image'
-import { useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
-import { Cell, Pie, PieChart, ResponsiveContainer } from 'recharts'
-import { FoodParamsType } from '../../types/Params'
-import { FoodType, MacronutrimentDataType } from '../../types/food'
+import { Undo2 } from "lucide-react";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
+import { FoodParamsType } from "../../types/Params";
+import { FoodType, MacronutrimentDataType } from "../../types/food";
 
-const FoodPage = ({ params }: { params: FoodParamsType }) => {
-  const router = useRouter()
+const FoodPage = (props: { params: Promise<FoodParamsType> }) => {
+  const router = useRouter();
 
-  const [food, setFood] = useState<FoodType | null>(null)
-  const [loading, setLoading] = useState<boolean>(true)
+  const [food, setFood] = useState<FoodType | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
   const [macronutriments, setMacronutrmients] = useState<
     MacronutrimentDataType[]
-  >([])
-  const [error, setError] = useState<string | null>(null)
-
-  const fetchFood = async () => {
-    try {
-      const APIQueryURL = `../api/foods/${params.name}`
-      const response = await fetch(APIQueryURL)
-      const data = await response.json()
-      if (data) {
-        const macronutrimentsData: MacronutrimentDataType[] = [
-          { name: 'carbohydrates', value: data.carbohydrates },
-          { name: 'protein', value: data.protein },
-          { name: 'fat', value: data.fat },
-        ]
-        setMacronutrmients(macronutrimentsData)
-        setFood(data)
-      }
-    } catch (error: Error | any) {
-      setError(error.message)
-      console.error(error)
-    } finally {
-      setLoading(false)
-    }
-  }
-  const COLORS = ['#F28907', '#5079F2', '#F2220F']
+  >([]);
+  const [error, setError] = useState<string | null | unknown>(null);
+  const [name, setName] = useState<string | null>(null);
+  props.params.then((params) => {
+    setName(params.name);
+  });
+  console.log("error", error);
   useEffect(() => {
-    params.name && fetchFood()
-  }, [params.name])
+    const fetchFood = async () => {
+      try {
+        const APIQueryURL = `../api/foods/${name}`;
+        const response = await fetch(APIQueryURL);
+        const data = await response.json();
+        if (data) {
+          const macronutrimentsData: MacronutrimentDataType[] = [
+            { name: "carbohydrates", value: data.carbohydrates },
+            { name: "protein", value: data.protein },
+            { name: "fat", value: data.fat },
+          ];
+          setMacronutrmients(macronutrimentsData);
+          setFood(data);
+        }
+      } catch (error: Error | unknown) {
+        setError(error);
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    if (name) {
+      fetchFood();
+    }
+  }, [name]);
+  const COLORS = ["#F28907", "#5079F2", "#F2220F"];
   return (
     <div className="h-screen bg-slate-950">
       {!loading && food && macronutriments ? (
@@ -78,11 +84,11 @@ const FoodPage = ({ params }: { params: FoodParamsType }) => {
                 </PieChart>
               </ResponsiveContainer>
               <div className="mt-4 text-center">
-                <span className="mr-2 inline-block h-3 w-3 bg-[#F28907]"></span>
+                <span className="mr-2 inline-block size-3 bg-[#F28907]"></span>
                 Carbohydrates
-                <span className="ml-4 inline-block h-3 w-3 bg-[#5079F2]"></span>
+                <span className="ml-4 inline-block size-3 bg-[#5079F2]"></span>
                 Protein
-                <span className="ml-4 inline-block h-3 w-3 bg-[#F2220F]"></span>
+                <span className="ml-4 inline-block size-3 bg-[#F2220F]"></span>
                 Fat
               </div>
             </div>
@@ -92,21 +98,21 @@ const FoodPage = ({ params }: { params: FoodParamsType }) => {
               </div>
               <div className="mb-4 rounded-lg bg-gray-800 p-4 text-white shadow-inner">
                 <div className="mb-2 flex items-center">
-                  <div className="mr-3 h-5 w-5 border border-gray-700 bg-[#F28907]"></div>
+                  <div className="mr-3 size-5 border border-gray-700 bg-[#F28907]"></div>
                   <div>
-                    Carbohydrates:{' '}
+                    Carbohydrates:{" "}
                     <span className="font-medium"> {food.carbohydrates} </span>
                   </div>
                 </div>
                 <div className="mb-2 flex items-center">
-                  <div className="mr-3 h-5 w-5 border border-gray-700 bg-[#5079F2]"></div>
+                  <div className="mr-3 size-5 border border-gray-700 bg-[#5079F2]"></div>
                   <div>
                     Protein:
                     <span className="font-medium"> {food.protein} </span>
                   </div>
                 </div>
                 <div className="mb-2 flex items-center">
-                  <div className="mr-3 h-5 w-5 border border-gray-700 bg-[#F2220F]"></div>
+                  <div className="mr-3 size-5 border border-gray-700 bg-[#F2220F]"></div>
                   <div>
                     Fat: <span className="font-medium"> {food.fat} </span>
                   </div>
@@ -122,7 +128,7 @@ const FoodPage = ({ params }: { params: FoodParamsType }) => {
                   />
                   <div className="ml-3">
                     <span className="font-semibold">Vitamins: </span>
-                    {food.vitamins?.join(', ')}
+                    {food.vitamins?.join(", ")}
                   </div>
                 </div>
                 <div className="mb-2 flex items-center">
@@ -134,7 +140,7 @@ const FoodPage = ({ params }: { params: FoodParamsType }) => {
                   />
                   <div className="ml-3">
                     <span className="font-semibold">Minerals: </span>
-                    {food.minerals?.join(', ')}
+                    {food.minerals?.join(", ")}
                   </div>
                 </div>
               </div>
@@ -147,7 +153,7 @@ const FoodPage = ({ params }: { params: FoodParamsType }) => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default FoodPage
+export default FoodPage;
